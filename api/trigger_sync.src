@@ -1,0 +1,34 @@
+&ACCESS RVO9
+&REL 3
+DEFFCT  BOOL trigger_sync ( )
+   
+   DECL EKI_STATUS ret
+   DECL INT status   
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("trigger")
+   ret = EKI_Open("trigger")
+   WAIT FOR $FLAG[10]
+   
+   ; send request
+   ret = EKI_SetString("trigger", "request/method", "trigger")
+   ret = EKI_SetString("trigger", "request/params/workflow/type", "string")
+   ret = EKI_SetString("trigger", "request/params/workflow/value", "votenet")
+   ret = EKI_Send("trigger", "request")
+   
+   ; check for errors
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("trigger","response/status", status)  
+   
+   ; close network socket
+   ret = EKI_Close("trigger")
+   ret = EKI_Clear("trigger") 
+   
+   IF status>0 THEN
+      RETURN FALSE
+   ELSE
+      RETURN TRUE
+   ENDIF
+   
+ENDFCT

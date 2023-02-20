@@ -1,0 +1,54 @@
+&ACCESS RV9
+&REL 2
+DEFFCT BOOL get_detection(pickFrame: OUT, class: OUT)
+   
+   DECL EKI_STATUS ret
+   DECL INT status
+   DECL FRAME pickFrame
+   DECL INT class
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("get_detection")
+   ret = EKI_Open("get_detection")
+   WAIT FOR $FLAG[10]
+   
+   ; get first frame
+   ret = EKI_SetString("get_detection", "request/method", "get_detection")
+   ret = EKI_SetString("get_detection", "request/params/representation/type", "string")
+   ret = EKI_SetString("get_detection", "request/params/representation/value", "ZYX")
+   ret = EKI_SetString("get_detection", "request/params/degrees/type", "bool")
+   ret = EKI_SetString("get_detection", "request/params/degrees/value", "1")
+   ret = EKI_Send("get_detection", "request")
+   
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("get_detection","response/status", status)   
+   
+   ; if there are no get_detections, close socket and return at once
+   IF status>0 THEN
+      ; close network socket
+      ret = EKI_Close("get_detection")
+      ret = EKI_Clear("get_detection")
+      RETURN FALSE   
+   ENDIF
+   
+   ; parse the received frame
+   WAIT FOR $FLAG[2]
+   ret = EKI_GetFrame("get_detection","response/params/param/pose", pickFrame)   
+   
+   ; KUKA poses are in mm
+   pickFrame.X = pickFrame.X * 1000
+   pickFrame.Y = pickFrame.Y * 1000
+   pickFrame.Z = pickFrame.Z * 1000
+   
+   ; parse the received class
+   WAIT FOR $FLAG[3]
+   ret = EKI_GetInt("get_detection","response/params/param/class", class)   
+   
+   ; close network socket
+   ret = EKI_Close("get_detection")
+   ret = EKI_Clear("get_detection")
+   
+   RETURN TRUE
+   
+ENDFCT
