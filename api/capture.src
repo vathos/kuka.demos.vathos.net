@@ -5,12 +5,15 @@ DEFFCT BOOL capture( )
    DECL EKI_STATUS ret
    DECL INT status
    DECL E6POS capture_frame
-   status = 2   
+   
+   ; wait for the robot to settle
+   WAIT SEC 3.5
    
    capture_frame = $POS_ACT
    capture_frame.X = 0.001 * capture_frame.X   
    capture_frame.Y = 0.001 * capture_frame.Y   
    capture_frame.Z = 0.001 * capture_frame.Z  
+   status = 2   
    
    ret = EKI_Init("save_image")
    ret = EKI_Open("save_image")
@@ -20,7 +23,7 @@ DEFFCT BOOL capture( )
    ret = EKI_SetString("save_image", "request/params/pose/type", "pose")
    ret = EKI_SetFrame("save_image","request/params/pose/value", capture_frame)
    ret = EKI_SetString("save_image", "request/params/stream_no/type", "int")
-   ret = EKI_SetInt("save_image","request/params/stream_no/value", 0)
+   ret = EKI_SetInt("save_image","request/params/stream_no/value", 1)
    ret = EKI_SetString("save_image", "request/params/representation/type", "string")
    ret = EKI_SetString("save_image", "request/params/representation/value", "ZYX")
    ret = EKI_SetString("save_image", "request/params/degrees/type", "bool")

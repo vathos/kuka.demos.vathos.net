@@ -1,11 +1,13 @@
-&ACCESS RV9
+&ACCESS RV2
 &REL 2
-DEFFCT BOOL get_detection(pickFrame: OUT, class: OUT)
+DEFFCT BOOL get_detection(pick_frame: OUT, class: OUT, product: OUT)
    
    DECL EKI_STATUS ret
    DECL INT status
-   DECL FRAME pickFrame
+   DECL FRAME pick_frame
    DECL INT class
+   DECL INT product
+
    status = 3
    
    ; open network socket
@@ -34,16 +36,20 @@ DEFFCT BOOL get_detection(pickFrame: OUT, class: OUT)
    
    ; parse the received frame
    WAIT FOR $FLAG[2]
-   ret = EKI_GetFrame("get_detection","response/params/param/pose", pickFrame)   
+   ret = EKI_GetFrame("get_detection","response/params/param/pose", pick_frame)   
    
    ; KUKA poses are in mm
-   pickFrame.X = pickFrame.X * 1000
-   pickFrame.Y = pickFrame.Y * 1000
-   pickFrame.Z = pickFrame.Z * 1000
+   pick_frame.X = pick_frame.X * 1000
+   pick_frame.Y = pick_frame.Y * 1000
+   pick_frame.Z = pick_frame.Z * 1000
    
    ; parse the received class
    WAIT FOR $FLAG[3]
    ret = EKI_GetInt("get_detection","response/params/param/class", class)   
+
+   ; parse the received product
+   WAIT FOR $FLAG[4]
+   ret = EKI_GetInt("get_detection","response/params/param/product", product)   
    
    ; close network socket
    ret = EKI_Close("get_detection")

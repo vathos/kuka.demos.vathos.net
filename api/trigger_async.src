@@ -1,7 +1,8 @@
-&ACCESS RVO9
+&ACCESS RVO1
 &REL 3
-DEFFCT  BOOL trigger_async ( )
+DEFFCT  BOOL trigger_async (wait_for_camera: IN)
    
+   DECL BOOL wait_for_camera
    DECL EKI_STATUS ret
    DECL INT status
    status = 3
@@ -15,6 +16,8 @@ DEFFCT  BOOL trigger_async ( )
    ret = EKI_SetString("trigger", "request/method", "trigger_async")
    ret = EKI_SetString("trigger", "request/params/workflow/type", "string")
    ret = EKI_SetString("trigger", "request/params/workflow/value", "votenet")
+   ret = EKI_SetString("trigger", "request/params/wait_for_camera/type", "bool")
+   ret = EKI_SetBool("trigger", "request/params/wait_for_camera/value", wait_for_camera)
    ret = EKI_Send("trigger", "request")
    
    ; check for errors

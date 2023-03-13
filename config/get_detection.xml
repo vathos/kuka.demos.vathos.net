@@ -22,6 +22,7 @@
          <ELEMENT Tag="response/status" Type="INT" Set_Flag="1"/>
          <ELEMENT Tag="response/params/param/pose" Type="FRAME" Set_Flag="2"/>
          <ELEMENT Tag="response/params/param/class" Type="INT" Set_Flag="3"/>
+         <ELEMENT Tag="response/params/param/product" Type="INT" Set_Flag="4"/>
       </XML>
    </RECEIVE>
 </ETHERNETKRL>

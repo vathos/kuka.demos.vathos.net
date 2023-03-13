@@ -1,0 +1,33 @@
+&ACCESS RVO2
+&PARAM EDITMASK = *
+DEFFCT BOOL load_configuration(product_id: IN)
+  
+   DECL CHAR product_id[]
+   DECL EKI_STATUS ret
+   DECL INT status
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("load_configuration")
+   ret = EKI_Open("load_configuration")
+   WAIT FOR $FLAG[10]
+   
+   ; send request
+   ret = EKI_SetString("load_configuration", "request/method", "load_configuration")
+   ret = EKI_SetString("load_configuration", "request/params/product/type", "string")
+   ret = EKI_SetString("load_configuration", "request/params/product/value", product_id[])
+   ret = EKI_SetString("load_configuration", "request/params/workflow/type", "string")
+   ret = EKI_SetString("load_configuration", "request/params/workflow/value", "votenet")
+   ret = EKI_Send("load_configuration", "request")
+   
+   ; check for errors
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("load_configuration","response/status", status)      
+
+   ; close network socket
+   ret = EKI_Close("load_configuration")
+   ret = EKI_Clear("load_configuration")
+
+
+   RETURN TRUE
+ENDFCT
