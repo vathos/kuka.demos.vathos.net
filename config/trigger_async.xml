@@ -13,6 +13,8 @@
          <ELEMENT Tag="request/method"/>
          <ELEMENT Tag="request/params/workflow/type"/>
          <ELEMENT Tag="request/params/workflow/value"/>
+         <ELEMENT Tag="request/params/wait_for_camera/type"/>
+         <ELEMENT Tag="request/params/wait_for_camera/value"/>
          <ELEMENT Tag="request/params/routing_key/type"/>
          <ELEMENT Tag="request/params/routing_key/value"/>
          </XML>

@@ -20,7 +20,10 @@ DEFFCT BOOL get_detection(pick_frame: OUT, class: OUT, product: OUT)
    ret = EKI_SetString("get_detection", "request/params/representation/type", "string")
    ret = EKI_SetString("get_detection", "request/params/representation/value", "ZYX")
    ret = EKI_SetString("get_detection", "request/params/degrees/type", "bool")
-   ret = EKI_SetString("get_detection", "request/params/degrees/value", "1")
+   ret = EKI_SetBool("get_detection", "request/params/degrees/value", TRUE)
+   ret = EKI_SetString("get_detection", "request/params/workflow/type", "string")
+   ret = EKI_SetString("get_detection", "request/params/workflow/value", "votenet")
+ 
    ret = EKI_Send("get_detection", "request")
    
    WAIT FOR $FLAG[1]
