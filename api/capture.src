@@ -1,4 +1,4 @@
-&ACCESS RVO1
+&ACCESS RVO
 &PARAM EDITMASK = *
 DEFFCT BOOL capture( )
    
@@ -7,29 +7,39 @@ DEFFCT BOOL capture( )
    DECL E6POS capture_frame
    
    ; wait for the robot to settle
-   WAIT SEC 3.5
+   WAIT SEC 1.0
    
+   ; make sure we store detections in world!
+   $BASE = $NULLFRAME
    capture_frame = $POS_ACT
    capture_frame.X = 0.001 * capture_frame.X   
    capture_frame.Y = 0.001 * capture_frame.Y   
    capture_frame.Z = 0.001 * capture_frame.Z  
    status = 2   
-   
+  
+   ; open network socket
    ret = EKI_Init("save_image")
    ret = EKI_Open("save_image")
    WAIT FOR $FLAG[10]
    
-   ret = EKI_SetString("save_image", "request/method", "save_image")
-   ret = EKI_SetString("save_image", "request/params/pose/type", "pose")
-   ret = EKI_SetFrame("save_image","request/params/pose/value", capture_frame)
+   ; assemble request
+   ret = EKI_SetString("save_image", "request/method", "call")
+   ret = EKI_SetString("save_image", "request/params/function_name/type", "string")
+   ret = EKI_SetString("save_image", "request/params/function_name/value", "save_image")
+   ret = EKI_SetString("save_image", "request/params/workflow/type", "string")
+   ret = EKI_SetString("save_image", "request/params/workflow/value", "depth")
+   ret = EKI_SetString("save_image", "request/params/timeout/type", "int")
+   ret = EKI_SetInt("save_image", "request/params/timeout/value", 60)
    ret = EKI_SetString("save_image", "request/params/stream_no/type", "int")
    ret = EKI_SetInt("save_image","request/params/stream_no/value", 1)
+   ret = EKI_SetString("save_image", "request/params/pose/type", "pose")
+   ret = EKI_SetFrame("save_image","request/params/pose/value", capture_frame)
    ret = EKI_SetString("save_image", "request/params/representation/type", "string")
    ret = EKI_SetString("save_image", "request/params/representation/value", "ZYX")
    ret = EKI_SetString("save_image", "request/params/degrees/type", "bool")
    ret = EKI_SetBool("save_image", "request/params/degrees/value", TRUE)
-   ret = EKI_SetString("save_image", "request/params/modality/type", "string")
-   ret = EKI_SetString("save_image", "request/params/modality/value", "depth")
+   
+   ; send request
    ret = EKI_Send("save_image", "request")
    
    ; parse response

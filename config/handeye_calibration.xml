@@ -1,38 +1,38 @@
 <ETHERNETKRL>
-   <CONFIGURATION>
-      <EXTERNAL>
-         <IP>192.168.31.10</IP>
-         <PORT>31234</PORT>
-      </EXTERNAL>
-      <INTERNAL>
-         <ALIVE Set_Flag="10"/>
-      </INTERNAL>
-   </CONFIGURATION>
-   <SEND>
-      <XML>
-         <ELEMENT Tag="request/method"/>
-         <ELEMENT Tag="request/params/session/type"/>
-         <ELEMENT Tag="request/params/session/value"/>
-         <ELEMENT Tag="request/params/product_id/type"/>
-         <ELEMENT Tag="request/params/product_id/value"/>
-         <ELEMENT Tag="request/params/representation/type"/>
-         <ELEMENT Tag="request/params/representation/value"/>
-         <ELEMENT Tag="request/params/degrees/type"/>
-         <ELEMENT Tag="request/params/degrees/value"/>         
-         <ELEMENT Tag="request/params/eye_in_hand/type"/>
-         <ELEMENT Tag="request/params/eye_in_hand/value"/>         
-         <ELEMENT Tag="request/params/pattern_side_length/type"/>
-         <ELEMENT Tag="request/params/pattern_side_length/value"/>
-         <ELEMENT Tag="request/params/pattern_width/type"/>
-         <ELEMENT Tag="request/params/pattern_width/value"/>         
-         <ELEMENT Tag="request/params/pattern_height/type"/>
-         <ELEMENT Tag="request/params/pattern_height/value"/>         
-      </XML>
-   </SEND>
-   <RECEIVE>
-      <XML>
-       <ELEMENT Tag="response/status" Type="INT" Set_Flag="1"/>
-       <ELEMENT Tag="response/params/param/result" Type="FRAME" Set_Flag="2"/>
-      </XML>
-   </RECEIVE>
+    <CONFIGURATION>
+        <EXTERNAL>
+            <IP>PUT_YOUR_IP_HERE</IP>
+            <PORT>31234</PORT>
+        </EXTERNAL>
+        <INTERNAL>
+            <ALIVE Set_Flag="10" />
+        </INTERNAL>
+    </CONFIGURATION>
+    <SEND>
+        <XML>
+            <ELEMENT Tag="request/method" />
+            <ELEMENT Tag="request/params/session/type" />
+            <ELEMENT Tag="request/params/session/value" />
+            <ELEMENT Tag="request/params/product_id/type" />
+            <ELEMENT Tag="request/params/product_id/value" />
+            <ELEMENT Tag="request/params/representation/type" />
+            <ELEMENT Tag="request/params/representation/value" />
+            <ELEMENT Tag="request/params/degrees/type" />
+            <ELEMENT Tag="request/params/degrees/value" />
+            <ELEMENT Tag="request/params/eye_in_hand/type" />
+            <ELEMENT Tag="request/params/eye_in_hand/value" />
+            <ELEMENT Tag="request/params/pattern_side_length/type" />
+            <ELEMENT Tag="request/params/pattern_side_length/value" />
+            <ELEMENT Tag="request/params/pattern_width/type" />
+            <ELEMENT Tag="request/params/pattern_width/value" />
+            <ELEMENT Tag="request/params/pattern_height/type" />
+            <ELEMENT Tag="request/params/pattern_height/value" />
+        </XML>
+    </SEND>
+    <RECEIVE>
+        <XML>
+            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+            <ELEMENT Tag="response/params/param" Type="REAL" Set_Flag="2" />
+        </XML>
+    </RECEIVE>
 </ETHERNETKRL>

@@ -1,37 +1,40 @@
 <ETHERNETKRL>
-   <CONFIGURATION>
-      <EXTERNAL>
-         <IP>192.168.31.10</IP>
-         <PORT>31234</PORT>
-      </EXTERNAL>
-      <INTERNAL>
-         <ALIVE Set_Flag="10"/>
-      </INTERNAL>
-   </CONFIGURATION>
-   <SEND>
-      <XML>
-         <ELEMENT Tag="request/method"/>
-         <ELEMENT Tag="request/params/pose/type"/>
-         <ELEMENT Tag="request/params/pose/value/@X"/>
-         <ELEMENT Tag="request/params/pose/value/@Y"/>
-         <ELEMENT Tag="request/params/pose/value/@Z"/>
-         <ELEMENT Tag="request/params/pose/value/@A"/>
-         <ELEMENT Tag="request/params/pose/value/@B"/>
-         <ELEMENT Tag="request/params/pose/value/@C"/>
-         <ELEMENT Tag="request/params/stream_no/type"/>
-         <ELEMENT Tag="request/params/stream_no/value"/>
-         <ELEMENT Tag="request/params/representation/type"/>
-         <ELEMENT Tag="request/params/representation/value"/>
-         <ELEMENT Tag="request/params/degrees/type"/>
-         <ELEMENT Tag="request/params/degrees/value"/>         
-         <ELEMENT Tag="request/params/modality/type"/>
-         <ELEMENT Tag="request/params/modality/value"/>
-      </XML>
-   </SEND>
-   <RECEIVE>
-      <XML>
-       <ELEMENT Tag="response/status" Type="INT" Set_Flag="1"/>
-       <ELEMENT Tag="response/params/param/image" Type="STRING" Set_Flag="2"/>
-      </XML>
-   </RECEIVE>
+    <CONFIGURATION>
+        <EXTERNAL>
+            <IP>PUT_YOUR_IP_HERE</IP>
+            <PORT>31234</PORT>
+        </EXTERNAL>
+        <INTERNAL>
+            <ALIVE Set_Flag="10" />
+        </INTERNAL>
+    </CONFIGURATION>
+    <SEND>
+        <XML>
+            <ELEMENT Tag="request/method" />
+            <ELEMENT Tag="request/params/function_name/type" />
+            <ELEMENT Tag="request/params/function_name/value" />
+            <ELEMENT Tag="request/params/workflow/type" />
+            <ELEMENT Tag="request/params/workflow/value" />
+            <ELEMENT Tag="request/params/timeout/type" />
+            <ELEMENT Tag="request/params/timeout/value" />
+            <ELEMENT Tag="request/params/stream_no/type" />
+            <ELEMENT Tag="request/params/stream_no/value" />
+            <ELEMENT Tag="request/params/pose/type" />
+            <ELEMENT Tag="request/params/pose/value/@X" />
+            <ELEMENT Tag="request/params/pose/value/@Y" />
+            <ELEMENT Tag="request/params/pose/value/@Z" />
+            <ELEMENT Tag="request/params/pose/value/@A" />
+            <ELEMENT Tag="request/params/pose/value/@B" />
+            <ELEMENT Tag="request/params/pose/value/@C" />
+            <ELEMENT Tag="request/params/representation/type" />
+            <ELEMENT Tag="request/params/representation/value" />
+            <ELEMENT Tag="request/params/degrees/type" />
+            <ELEMENT Tag="request/params/degrees/value" />
+        </XML>
+    </SEND>
+    <RECEIVE>
+        <XML>
+            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+        </XML>
+    </RECEIVE>
 </ETHERNETKRL>

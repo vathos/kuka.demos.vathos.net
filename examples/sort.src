@@ -2,9 +2,11 @@
 &PARAM EDITMASK = *
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
 DEF sort( )
+   
    DECL BOOL api_call_success
    DECL FRAME pick_frame
    DECL INT product_index
+   DECL INT class_index
    
    ;FOLD INI;%{PE}
       ;FOLD BASISTECH INI
@@ -16,6 +18,7 @@ DEF sort( )
          ;Make your modifications here
          pick_frame = $NULLFRAME
          product_index = -1
+         class_index = -1
       ;ENDFOLD (USER INI)
    ;ENDFOLD (INI)
    
@@ -26,8 +29,8 @@ DEF sort( )
    ; SAK
    PTP PICK_HOME
    
-   ; reload configuration here to autotune cam parameters
-   api_call_success = load_configuration("63fcc44d2cec3500131af42f")
+   ; load configuration
+   api_call_success = load_configuration("63fcc44d2cec3500131af42f", "votenet")
    IF NOT api_call_success THEN
       HALT
    ENDIF
@@ -36,13 +39,13 @@ DEF sort( )
    LOOP
       
       ; with first/failed attempt, we need to trigger synchronously
-      api_call_success = trigger_sync()
+      api_call_success = trigger_async(FALSE)
       
       ; async pick & place loop
       LOOP
          
-         ; get a detection
-         api_call_success = get_detection(pick_frame, product_index)
+         ; get next detection, timeout after 10s
+         api_call_success = get_pose(pick_frame, product_index, class_index, "votenet", 10)
          ; no more detections, break out into outer image capture loop
          IF NOT api_call_success THEN
             EXIT
@@ -51,15 +54,16 @@ DEF sort( )
          ; all detections are relative to camera base obtained from hand-eye calib
          $BASE = BASE_DATA[1]
          
-         ; more to pe-position
+         ; more to pe-position defined in web GUI
          PTP pick_frame
          
          ; pick up
-         LIN_REL { Z 300 } #TOOL
+         LIN_REL {Z 300} #TOOL
          $OUT[1] = FALSE
-         LIN_REL { Z -300 } #TOOL
+         LIN_REL {Z -300} #TOOL
                   
-         ; trigger capture and evaluation for the next cycle
+         ; trigger capture and evaluation for the next cycle, no need to wait for capture to 
+         ; finish when camera is not mounted on-arm
          api_call_success = trigger_async(FALSE)
          
          SWITCH product_index
@@ -72,12 +76,7 @@ DEF sort( )
          PTP PICK_HOME
          
       ENDLOOP
-      
-      ; reload configuration here to autotune cam parameters after picking failuress
-      api_call_success = load_configuration("63fcc44d2cec3500131af42f")
-      IF NOT api_call_success THEN
-         HALT
-      ENDIF
-      
+            
    ENDLOOP   
+
 END

@@ -1,8 +1,9 @@
-&ACCESS RVO2
+&ACCESS RVO
 &PARAM EDITMASK = *
-DEFFCT BOOL load_configuration(product_id: IN)
+DEFFCT BOOL load_configuration(product_id: IN, workflow: IN)
   
    DECL CHAR product_id[]
+   DECL CHAR workflow[]
    DECL EKI_STATUS ret
    DECL INT status
    status = 3
@@ -17,7 +18,7 @@ DEFFCT BOOL load_configuration(product_id: IN)
    ret = EKI_SetString("load_configuration", "request/params/product/type", "string")
    ret = EKI_SetString("load_configuration", "request/params/product/value", product_id[])
    ret = EKI_SetString("load_configuration", "request/params/workflow/type", "string")
-   ret = EKI_SetString("load_configuration", "request/params/workflow/value", "votenet")
+   ret = EKI_SetString("load_configuration", "request/params/workflow/value", workflow[])
    ret = EKI_Send("load_configuration", "request")
    
    ; check for errors
@@ -25,9 +26,13 @@ DEFFCT BOOL load_configuration(product_id: IN)
    ret = EKI_GetInt("load_configuration","response/status", status)      
 
    ; close network socket
-   ret = EKI_Close("load_configuration")
-   ret = EKI_Clear("load_configuration")
-
-
-   RETURN TRUE
+   ret = EKI_Close("patch_configuration")
+   ret = EKI_Clear("patch_configuration")
+   
+   IF status>0 THEN
+      return FALSE
+   ELSE
+      RETURN TRUE
+   ENDIF
+   
 ENDFCT

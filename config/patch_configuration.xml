@@ -1,27 +1,27 @@
 <ETHERNETKRL>
     <CONFIGURATION>
-       <EXTERNAL>
-          <IP>192.168.31.10</IP>
-          <PORT>31234</PORT>
-       </EXTERNAL>
-       <INTERNAL>
-          <ALIVE Set_Flag="10"/>
-       </INTERNAL>
+        <EXTERNAL>
+            <IP>PUT_YOUR_IP_HERE</IP>
+            <PORT>31234</PORT>
+        </EXTERNAL>
+        <INTERNAL>
+            <ALIVE Set_Flag="10" />
+        </INTERNAL>
     </CONFIGURATION>
     <SEND>
-       <XML>
-          <ELEMENT Tag="request/method"/>
-          <ELEMENT Tag="request/params/config_id/type"/>
-          <ELEMENT Tag="request/params/config_id/value"/>
-          <ELEMENT Tag="request/params/key/type"/>
-          <ELEMENT Tag="request/params/key/value"/>
-          <ELEMENT Tag="request/params/value/type"/>
-          <ELEMENT Tag="request/params/value/value"/>
+        <XML>
+            <ELEMENT Tag="request/method" />
+            <ELEMENT Tag="request/params/config_id/type" />
+            <ELEMENT Tag="request/params/config_id/value" />
+            <ELEMENT Tag="request/params/key/type" />
+            <ELEMENT Tag="request/params/key/value" />
+            <ELEMENT Tag="request/params/value/type" />
+            <ELEMENT Tag="request/params/value/value" />
         </XML>
     </SEND>
     <RECEIVE>
-       <XML>
-          <ELEMENT Tag="response/status" Type="INT" Set_Flag="1"/>
-       </XML>
+        <XML>
+            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+        </XML>
     </RECEIVE>
- </ETHERNETKRL>
+</ETHERNETKRL>

@@ -1,0 +1,34 @@
+<ETHERNETKRL>
+    <CONFIGURATION>
+        <EXTERNAL>
+            <IP>PUT_YOUR_IP_HERE</IP>
+            <PORT>31234</PORT>
+        </EXTERNAL>
+        <INTERNAL>
+            <ALIVE Set_Flag="10" />
+        </INTERNAL>
+    </CONFIGURATION>
+    <SEND>
+        <XML>
+            <ELEMENT Tag="request/method" />
+            <ELEMENT Tag="request/params/function_name/type" />
+            <ELEMENT Tag="request/params/function_name/value" />
+            <ELEMENT Tag="request/params/workflow/type" />
+            <ELEMENT Tag="request/params/workflow/value" />
+            <ELEMENT Tag="request/params/timeout/type" />
+            <ELEMENT Tag="request/params/timeout/value" />
+            <ELEMENT Tag="request/params/representation/type" />
+            <ELEMENT Tag="request/params/representation/value" />
+            <ELEMENT Tag="request/params/degrees/type" />
+            <ELEMENT Tag="request/params/degrees/value" />
+            <ELEMENT Tag="request/params/pipeline_timeout/type" />
+            <ELEMENT Tag="request/params/pipeline_timeout/value" />
+        </XML>
+    </SEND>
+    <RECEIVE>
+        <XML>
+            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+            <ELEMENT Tag="response/params/param" Type="REAL" Set_Flag="2" />
+        </XML>
+    </RECEIVE>
+</ETHERNETKRL>
