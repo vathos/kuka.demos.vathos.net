@@ -58,7 +58,7 @@ DEFFCT BOOL run_hec(product: IN, session: IN, on_arm: IN, result: OUT)
    result.B = result_array[5]
    result.C = result_array[6]
    
-   ; always close connection first
+   ; close socket
    ret = EKI_Close("handeye_calibration")
    ret = EKI_Clear("handeye_calibration")
    

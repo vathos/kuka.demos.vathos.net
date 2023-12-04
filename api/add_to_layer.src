@@ -68,8 +68,8 @@ DEFFCT BOOL add_to_layer (box_frame: IN, cam2plane: IN, layer: IN, position: IN)
    ; on failure, close socket and return at once
    IF status>0 THEN   
       RETURN FALSE   
+   ELSE 
+      RETURN TRUE
    ENDIF
         
-   RETURN TRUE
-
 ENDFCT

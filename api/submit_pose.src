@@ -48,16 +48,17 @@ DEFFCT BOOL submit_pose(pallet_frame: IN, workflow: IN, class: IN)
    
    WAIT FOR $FLAG[1]
    ret = EKI_GetInt("submit_pose", "response/status", status)   
-
+   WAIT SEC 0.0
+   
    ; close network socket
    ret = EKI_Close("submit_pose")
    ret = EKI_Clear("submit_pose")
 
-   ; on failure, close socket and return at once
+   ; return FALSE on failure
    IF status>0 THEN   
       RETURN FALSE   
+   ELSE
+      RETURN TRUE
    ENDIF
         
-   RETURN TRUE
-
 ENDFCT

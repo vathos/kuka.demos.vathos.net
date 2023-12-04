@@ -10,7 +10,7 @@ DEFFCT BOOL patch_session(configuration:IN, value:IN)
    ; init
    status = 3
    
-   ; open network socketn
+   ; open network socket
    ret = EKI_Init("patch_configuration")
    ret = EKI_Open("patch_configuration")
    WAIT FOR $FLAG[10]
@@ -35,8 +35,8 @@ DEFFCT BOOL patch_session(configuration:IN, value:IN)
    
    IF status>0 THEN
       return FALSE
+   ELSE
+      RETURN TRUE
    ENDIF
-   
-   RETURN TRUE
-   
+      
 ENDFCT

@@ -16,7 +16,8 @@ DEFFCT BOOL capture( )
    capture_frame.Y = 0.001 * capture_frame.Y   
    capture_frame.Z = 0.001 * capture_frame.Z  
    status = 2   
-   
+  
+   ; open network socket
    ret = EKI_Init("save_image")
    ret = EKI_Open("save_image")
    WAIT FOR $FLAG[10]
