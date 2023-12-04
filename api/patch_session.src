@@ -1,15 +1,16 @@
-&ACCESS RV9
-DEFFCT BOOL patch_configuration (configuration:IN, key:IN, value:IN)
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL patch_session(configuration:IN, value:IN)
    
    DECL CHAR configuration[]
-   DECL CHAR key[]
-   DECL REAL value
+   DECL CHAR value[]
    DECL EKI_STATUS ret
    DECL INT status
-
+   
+   ; init
    status = 3
    
-   ; open network socket
+   ; open network socketn
    ret = EKI_Init("patch_configuration")
    ret = EKI_Open("patch_configuration")
    WAIT FOR $FLAG[10]
@@ -19,9 +20,9 @@ DEFFCT BOOL patch_configuration (configuration:IN, key:IN, value:IN)
    ret = EKI_SetString("patch_configuration", "request/params/config_id/type", "string")
    ret = EKI_SetString("patch_configuration", "request/params/config_id/value", configuration[])
    ret = EKI_SetString("patch_configuration", "request/params/key/type", "string")
-   ret = EKI_SetString("patch_configuration", "request/params/key/value", key[])
-   ret = EKI_SetString("patch_configuration", "request/params/value/type", "float")
-   ret = EKI_SetReal("patch_configuration", "request/params/value/value", value)   
+   ret = EKI_SetString("patch_configuration", "request/params/key/value", "session")
+   ret = EKI_SetString("patch_configuration", "request/params/value/type", "string")
+   ret = EKI_SetString("patch_configuration", "request/params/value/value", value[])   
    ret = EKI_Send("patch_configuration", "request")
    
    ; check for errors
@@ -33,9 +34,9 @@ DEFFCT BOOL patch_configuration (configuration:IN, key:IN, value:IN)
    ret = EKI_Clear("patch_configuration")
    
    IF status>0 THEN
-      RETURN FALSE
-   ELSE 
-      RETURN TRUE
+      return FALSE
    ENDIF
+   
+   RETURN TRUE
    
 ENDFCT
