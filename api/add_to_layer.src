@@ -65,7 +65,7 @@ DEFFCT BOOL add_to_layer (box_frame: IN, cam2plane: IN, layer: IN, position: IN)
    ret = EKI_Close("add_to_layer")
    ret = EKI_Clear("add_to_layer")
 
-   ; on failure, close socket and return at once
+   ; return result
    IF status>0 THEN   
       RETURN FALSE   
    ELSE 
