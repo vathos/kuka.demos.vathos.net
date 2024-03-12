@@ -12,13 +12,9 @@ DEFFCT BOOL reset_layer()
    WAIT FOR $FLAG[10]
    
    ; assemble the XML message
-   ret = EKI_SetString("reset_layer", "request/method", "call")
-   ret = EKI_SetString("reset_layer", "request/params/function_name/type", "string")
-   ret = EKI_SetString("reset_layer", "request/params/function_name/value", "reset_layer")
+   ret = EKI_SetString("reset_layer", "request/method", "reset_layer")
    ret = EKI_SetString("reset_layer", "request/params/workflow/type", "string")
    ret = EKI_SetString("reset_layer", "request/params/workflow/value", "palletizing")
-   ret = EKI_SetString("reset_layer", "request/params/timeout/type", "int")
-   ret = EKI_SetInt("reset_layer", "request/params/timeout/value", 5)
    
    ; send the request
    ret = EKI_Send("reset_layer", "request")

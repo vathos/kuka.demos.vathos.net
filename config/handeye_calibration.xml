@@ -27,6 +27,8 @@
             <ELEMENT Tag="request/params/pattern_width/value" />
             <ELEMENT Tag="request/params/pattern_height/type" />
             <ELEMENT Tag="request/params/pattern_height/value" />
+            <ELEMENT Tag="request/params/service/type" />
+            <ELEMENT Tag="request/params/service/value" />
         </XML>
     </SEND>
     <RECEIVE>

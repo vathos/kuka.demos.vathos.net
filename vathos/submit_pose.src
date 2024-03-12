@@ -27,13 +27,9 @@ DEFFCT BOOL submit_pose(pallet_frame: IN, workflow: IN, class: IN)
    WAIT FOR $FLAG[10]
    
    ; assemble request
-   ret = EKI_SetString("submit_pose", "request/method", "call")
-   ret = EKI_SetString("submit_pose", "request/params/function_name/type", "string")
-   ret = EKI_SetString("submit_pose", "request/params/function_name/value", "submit_pose")
+   ret = EKI_SetString("submit_pose", "request/method", "submit_pose")
    ret = EKI_SetString("submit_pose", "request/params/workflow/type", "string")
    ret = EKI_SetString("submit_pose", "request/params/workflow/value", workflow[])
-   ret = EKI_SetString("submit_pose", "request/params/timeout/type", "int")
-   ret = EKI_SetInt("submit_pose", "request/params/timeout/value", 10)
    ret = EKI_SetString("submit_pose", "request/params/pose/type", "pose")
    ret = EKI_SetFrame("submit_pose","request/params/pose/value", pallet_frame_m)
    ret = EKI_SetString("submit_pose", "request/params/representation/type", "string")
