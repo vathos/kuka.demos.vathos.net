@@ -1,7 +1,7 @@
 <ETHERNETKRL>
     <CONFIGURATION>
         <EXTERNAL>
-            <IP>PUT_YOUR_IP_HERE</IP>
+            <IP>172.31.1.147</IP>
             <PORT>31234</PORT>
         </EXTERNAL>
         <INTERNAL>
