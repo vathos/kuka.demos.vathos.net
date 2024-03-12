@@ -56,7 +56,7 @@ DEF handeye( )
    ;ENDFOLD
    
    ; capture image
-   api_call_success = capture()
+   api_call_success = save_image()
    IF NOT api_call_success THEN
       HALT
    ENDIF
@@ -66,7 +66,7 @@ DEF handeye( )
    ; ...
 
    ; run calibration
-   api_call_success = run_hec("63f8cb5fd312240012f27997", timestamp[], result)
+   api_call_success = handeye_calibration("63f8cb5fd312240012f27997", timestamp[], FALSE, result)
    IF NOT api_call_success THEN
       HALT
    ENDIF

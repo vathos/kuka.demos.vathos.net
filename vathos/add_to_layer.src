@@ -1,0 +1,75 @@
+&ACCESS RV
+DEFFCT BOOL add_to_layer (box_frame: IN, cam2plane: IN, layer: IN, position: IN)
+
+   DECL EKI_STATUS ret
+   DECL INT status
+   DECL FRAME box_frame
+   DECL FRAME box_frame_m
+   DECL FRAME cam2plane
+   DECL FRAME cam2plane_m
+   DECL INT layer
+   DECL INT position
+   box_frame_m = $NULLFRAME
+   cam2plane_m = $NULLFRAME
+   status = 3
+   
+   ; KUKA poses are in mm, make a copy not to mess with input frame
+   box_frame_m.X = box_frame.X * 0.001
+   box_frame_m.Y = box_frame.Y * 0.001
+   box_frame_m.Z = box_frame.Z * 0.001
+   box_frame_m.A = box_frame.A
+   box_frame_m.B = box_frame.B
+   box_frame_m.C = box_frame.C
+
+   ; KUKA poses are in mm, make a copy not to mess with input frame
+   cam2plane_m.X = cam2plane.X * 0.001
+   cam2plane_m.Y = cam2plane.Y * 0.001
+   cam2plane_m.Z = cam2plane.Z * 0.001
+   cam2plane_m.A = cam2plane.A
+   cam2plane_m.B = cam2plane.B
+   cam2plane_m.C = cam2plane.C
+
+   ; open network socket
+   ret = EKI_Init("add_to_layer")
+   ret = EKI_Open("add_to_layer")
+   WAIT FOR $FLAG[10]
+   
+   ; assemble request
+   ret = EKI_SetString("add_to_layer", "request/method", "call")
+   ret = EKI_SetString("add_to_layer", "request/params/function_name/type", "string")
+   ret = EKI_SetString("add_to_layer", "request/params/function_name/value", "add_to_layer")
+   ret = EKI_SetString("add_to_layer", "request/params/workflow/type", "string")
+   ret = EKI_SetString("add_to_layer", "request/params/workflow/value", "palletizing")
+   ret = EKI_SetString("add_to_layer", "request/params/timeout/type", "int")
+   ret = EKI_SetInt("add_to_layer", "request/params/timeout/value", 10)
+   ret = EKI_SetString("add_to_layer", "request/params/pose/type", "pose")
+   ret = EKI_SetFrame("add_to_layer","request/params/pose/value", box_frame_m)
+   ret = EKI_SetString("add_to_layer", "request/params/cam2plane/type", "pose")
+   ret = EKI_SetFrame("add_to_layer","request/params/cam2plane/value", cam2plane_m)
+   ret = EKI_SetString("add_to_layer", "request/params/representation/type", "string")
+   ret = EKI_SetString("add_to_layer", "request/params/representation/value", "ZYX")
+   ret = EKI_SetString("add_to_layer", "request/params/degrees/type", "bool")
+   ret = EKI_SetBool("add_to_layer", "request/params/degrees/value", TRUE)
+   ret = EKI_SetString("add_to_layer", "request/params/layer/type", "int")
+   ret = EKI_SetInt("add_to_layer", "request/params/layer/value", layer)
+   ret = EKI_SetString("add_to_layer", "request/params/position/type", "int")
+   ret = EKI_SetInt("add_to_layer", "request/params/position/value", position)
+
+   ; send the request
+   ret = EKI_Send("add_to_layer", "request")
+   
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("add_to_layer", "response/status", status)   
+
+   ; close network socket
+   ret = EKI_Close("add_to_layer")
+   ret = EKI_Clear("add_to_layer")
+
+   ; return result
+   IF status>0 THEN   
+      RETURN FALSE   
+   ELSE 
+      RETURN TRUE
+   ENDIF
+        
+ENDFCT

@@ -1,0 +1,77 @@
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL get_item(item_pose: OUT, grip: IN, layer: IN, position: IN)
+
+   DECL EKI_STATUS ret
+   DECL INT status
+   DECL FRAME item_pose
+   DECL REAL detection[8]
+   DECL BOOL grip
+   DECL INT layer
+   DECL INT position
+   DECL INT i
+   
+   ; init
+   status = 3
+   FOR i=1 TO 8
+      detection[i] = 0.0
+   ENDFOR
+     
+   ; open network socket
+   ret = EKI_Init("get_item")
+   ret = EKI_Open("get_item")
+   WAIT FOR $FLAG[10]
+   
+   ; assemble request
+   ret = EKI_SetString("get_item", "request/method", "call")
+   ret = EKI_SetString("get_item", "request/params/function_name/type", "string")
+   ret = EKI_SetString("get_item", "request/params/function_name/value", "get_item")
+   ret = EKI_SetString("get_item", "request/params/workflow/type", "string")
+   ret = EKI_SetString("get_item", "request/params/workflow/value", "magazine")
+   ret = EKI_SetString("get_item", "request/params/timeout/type", "int")
+   ret = EKI_SetInt("get_item", "request/params/timeout/value", 10)
+   ret = EKI_SetString("get_item", "request/params/layer/type", "int")
+   ret = EKI_SetInt("get_item", "request/params/layer/value", layer)
+   ret = EKI_SetString("get_item", "request/params/position/type", "int")
+   ret = EKI_SetInt("get_item", "request/params/position/value", position)
+   ret = EKI_SetString("get_item", "request/params/representation/type", "string")
+   ret = EKI_SetString("get_item", "request/params/representation/value", "ZYX")
+   ret = EKI_SetString("get_item", "request/params/degrees/type", "bool")
+   ret = EKI_SetBool("get_item", "request/params/degrees/value", TRUE)
+   ret = EKI_SetString("get_item", "request/params/grip/type", "bool")
+   ret = EKI_SetBool("get_item", "request/params/grip/value", grip)
+
+   ; send the request
+   ret = EKI_Send("get_item", "request")
+
+   ; wait for status
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("get_item","response/status", status)   
+   
+   ; close connection and return on error
+   IF status>0 THEN
+      ; close network socket
+      ret = EKI_Close("get_item")
+      ret = EKI_Clear("get_item")
+      RETURN FALSE   
+   ENDIF
+   
+   ; parse the received frame
+   WAIT FOR $FLAG[2]
+   ret = EKI_GetRealArray("get_item", "response/params/param", detection[])
+   
+   ; KUKA poses are in mm
+   item_pose.X = detection[1] * 1000
+   item_pose.Y = detection[2] * 1000
+   item_pose.Z = detection[3] * 1000
+   item_pose.A = detection[4]
+   item_pose.B = detection[5]
+   item_pose.C = detection[6]
+   
+   ; close network socket
+   ret = EKI_Close("get_item")
+   ret = EKI_Clear("get_item")
+   
+   RETURN TRUE
+
+ENDFCT

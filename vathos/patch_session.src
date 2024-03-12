@@ -1,0 +1,42 @@
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL patch_session(configuration:IN, value:IN)
+   
+   DECL CHAR configuration[]
+   DECL CHAR value[]
+   DECL EKI_STATUS ret
+   DECL INT status
+   
+   ; init
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("patch_configuration")
+   ret = EKI_Open("patch_configuration")
+   WAIT FOR $FLAG[10]
+   
+   ; send request
+   ret = EKI_SetString("patch_configuration", "request/method", "patch_configuration")
+   ret = EKI_SetString("patch_configuration", "request/params/config_id/type", "string")
+   ret = EKI_SetString("patch_configuration", "request/params/config_id/value", configuration[])
+   ret = EKI_SetString("patch_configuration", "request/params/key/type", "string")
+   ret = EKI_SetString("patch_configuration", "request/params/key/value", "session")
+   ret = EKI_SetString("patch_configuration", "request/params/value/type", "string")
+   ret = EKI_SetString("patch_configuration", "request/params/value/value", value[])   
+   ret = EKI_Send("patch_configuration", "request")
+   
+   ; check for errors
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("patch_configuration","response/status", status)    
+   
+   ; close network socket
+   ret = EKI_Close("patch_configuration")
+   ret = EKI_Clear("patch_configuration")
+   
+   IF status>0 THEN
+      return FALSE
+   ELSE
+      RETURN TRUE
+   ENDIF
+      
+ENDFCT

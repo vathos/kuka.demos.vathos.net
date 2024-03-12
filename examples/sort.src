@@ -39,7 +39,7 @@ DEF sort( )
    LOOP
       
       ; with first/failed attempt, we need to trigger synchronously
-      api_call_success = trigger_async(FALSE)
+      api_call_success = trigger(FALSE)
       
       ; async pick & place loop
       LOOP
@@ -64,7 +64,7 @@ DEF sort( )
                   
          ; trigger capture and evaluation for the next cycle, no need to wait for capture to 
          ; finish when camera is not mounted on-arm
-         api_call_success = trigger_async(FALSE)
+         api_call_success = trigger(FALSE)
          
          SWITCH product_index
             CASE 0
