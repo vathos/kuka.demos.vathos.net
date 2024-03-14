@@ -26,8 +26,8 @@ DEFFCT BOOL load_configuration(product_id: IN, workflow: IN)
    ret = EKI_GetInt("load_configuration","response/status", status)      
 
    ; close network socket
-   ret = EKI_Close("patch_configuration")
-   ret = EKI_Clear("patch_configuration")
+   ret = EKI_Close("load_configuration")
+   ret = EKI_Clear("load_configuration")
    
    IF status>0 THEN
       return FALSE
