@@ -24,13 +24,9 @@ DEFFCT BOOL get_pose(pick_frame: OUT, product: OUT, class: OUT, workflow: IN, ti
    WAIT FOR $FLAG[10]
    
    ; assemble the XML message
-   ret = EKI_SetString("get_pose", "request/method", "call")
-   ret = EKI_SetString("get_pose", "request/params/function_name/type", "string")
-   ret = EKI_SetString("get_pose", "request/params/function_name/value", "get_pose")
+   ret = EKI_SetString("get_pose", "request/method", "get_pose")
    ret = EKI_SetString("get_pose", "request/params/workflow/type", "string")
    ret = EKI_SetString("get_pose", "request/params/workflow/value", workflow[])
-   ret = EKI_SetString("get_pose", "request/params/timeout/type", "int")
-   ret = EKI_SetInt("get_pose", "request/params/timeout/value", 120)
    ret = EKI_SetString("get_pose", "request/params/representation/type", "string")
    ret = EKI_SetString("get_pose", "request/params/representation/value", "ZYX")
    ret = EKI_SetString("get_pose", "request/params/degrees/type", "bool")

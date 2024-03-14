@@ -32,6 +32,16 @@ DEFFCT BOOL handeye_calibration(product: IN, session: IN, on_arm: IN, result: OU
    ret = EKI_SetBool("handeye_calibration", "request/params/degrees/value", TRUE)
    ret = EKI_SetString("handeye_calibration", "request/params/eye_in_hand/type", "bool")
    ret = EKI_SetBool("handeye_calibration", "request/params/eye_in_hand/value", on_arm)
+   ret = EKI_SetString("handeye_calibration", "request/params/pattern_side_length/type", "float")
+   ret = EKI_SetReal("handeye_calibration", "request/params/pattern_side_length/value", 0.025)
+   ret = EKI_SetString("handeye_calibration", "request/params/pattern_width/type", "int")
+   ret = EKI_SetInt("handeye_calibration", "request/params/pattern_width/value", 10)
+   ret = EKI_SetString("handeye_calibration", "request/params/pattern_height/type", "int")
+   ret = EKI_SetInt("handeye_calibration", "request/params/pattern_height/value", 7)
+   ret = EKI_SetString("handeye_calibration", "request/params/service/type", "string")
+   ret = EKI_SetString("handeye_calibration", "request/params/service/value", "3d.handeye.calibration.vathos.net")
+
+   ; send the request
    ret = EKI_Send("handeye_calibration", "request")
    
    ; parse response

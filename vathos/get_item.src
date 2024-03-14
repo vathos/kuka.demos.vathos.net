@@ -23,13 +23,9 @@ DEFFCT BOOL get_item(item_pose: OUT, grip: IN, layer: IN, position: IN)
    WAIT FOR $FLAG[10]
    
    ; assemble request
-   ret = EKI_SetString("get_item", "request/method", "call")
-   ret = EKI_SetString("get_item", "request/params/function_name/type", "string")
-   ret = EKI_SetString("get_item", "request/params/function_name/value", "get_item")
+   ret = EKI_SetString("get_item", "request/method", "get_item")
    ret = EKI_SetString("get_item", "request/params/workflow/type", "string")
    ret = EKI_SetString("get_item", "request/params/workflow/value", "magazine")
-   ret = EKI_SetString("get_item", "request/params/timeout/type", "int")
-   ret = EKI_SetInt("get_item", "request/params/timeout/value", 10)
    ret = EKI_SetString("get_item", "request/params/layer/type", "int")
    ret = EKI_SetInt("get_item", "request/params/layer/value", layer)
    ret = EKI_SetString("get_item", "request/params/position/type", "int")

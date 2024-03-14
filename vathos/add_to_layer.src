@@ -35,13 +35,9 @@ DEFFCT BOOL add_to_layer (box_frame: IN, cam2plane: IN, layer: IN, position: IN)
    WAIT FOR $FLAG[10]
    
    ; assemble request
-   ret = EKI_SetString("add_to_layer", "request/method", "call")
-   ret = EKI_SetString("add_to_layer", "request/params/function_name/type", "string")
-   ret = EKI_SetString("add_to_layer", "request/params/function_name/value", "add_to_layer")
+   ret = EKI_SetString("add_to_layer", "request/method", "add_to_layer")
    ret = EKI_SetString("add_to_layer", "request/params/workflow/type", "string")
    ret = EKI_SetString("add_to_layer", "request/params/workflow/value", "palletizing")
-   ret = EKI_SetString("add_to_layer", "request/params/timeout/type", "int")
-   ret = EKI_SetInt("add_to_layer", "request/params/timeout/value", 10)
    ret = EKI_SetString("add_to_layer", "request/params/pose/type", "pose")
    ret = EKI_SetFrame("add_to_layer","request/params/pose/value", box_frame_m)
    ret = EKI_SetString("add_to_layer", "request/params/cam2plane/type", "pose")

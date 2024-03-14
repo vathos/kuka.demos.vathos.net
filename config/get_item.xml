@@ -11,12 +11,8 @@
     <SEND>
         <XML>
             <ELEMENT Tag="request/method" />
-            <ELEMENT Tag="request/params/function_name/type" />
-            <ELEMENT Tag="request/params/function_name/value" />
             <ELEMENT Tag="request/params/workflow/type" />
             <ELEMENT Tag="request/params/workflow/value" />
-            <ELEMENT Tag="request/params/timeout/type" />
-            <ELEMENT Tag="request/params/timeout/value" />
             <ELEMENT Tag="request/params/layer/type" />
             <ELEMENT Tag="request/params/layer/value" />
             <ELEMENT Tag="request/params/position/type" />
