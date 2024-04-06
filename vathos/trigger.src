@@ -14,7 +14,7 @@ DEFFCT  BOOL trigger(workflow:IN, wait_for_camera: IN)
    WAIT FOR $FLAG[10]
    
    ; send request
-   ret = EKI_SetString("trigger", "request/method", "trigger_async")
+   ret = EKI_SetString("trigger", "request/method", "trigger")
    ret = EKI_SetString("trigger", "request/params/workflow/type", "string")
    ret = EKI_SetString("trigger", "request/params/workflow/value", workflow[])
    ret = EKI_SetString("trigger", "request/params/wait_for_camera/type", "bool")
