@@ -21,7 +21,7 @@ DEFFCT BOOL reset_layer()
 
    ; wait for status
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("reset_layer","response/status", status)   
+   ret = EKI_GetInt("reset_layer", "response/status", status)   
 
    ret = EKI_Close("reset_layer")
    ret = EKI_Clear("reset_layer")

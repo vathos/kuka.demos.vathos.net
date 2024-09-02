@@ -27,7 +27,7 @@ DEFFCT BOOL patch_session(configuration:IN, value:IN)
    
    ; check for errors
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("patch_configuration","response/status", status)    
+   ret = EKI_GetInt("patch_configuration", "response/status", status)    
    
    ; close network socket
    ret = EKI_Close("patch_configuration")

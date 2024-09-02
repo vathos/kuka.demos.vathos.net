@@ -42,7 +42,7 @@ DEFFCT BOOL save_image(stream_no: IN)
    
    ; parse response
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("save_image","response/status", status)   
+   ret = EKI_GetInt("save_image", "response/status", status)   
    
    ; always close connection first
    ret = EKI_Close("save_image")

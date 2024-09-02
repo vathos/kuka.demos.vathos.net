@@ -39,7 +39,7 @@ DEFFCT BOOL get_pose(pick_frame: OUT, product: OUT, class: OUT, workflow: IN, ti
 
    ; wait for status
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("get_pose","response/status", status)   
+   ret = EKI_GetInt("get_pose", "response/status", status)   
    
    ; close connection and return on error
    IF status>0 THEN

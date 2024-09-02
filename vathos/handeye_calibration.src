@@ -46,7 +46,7 @@ DEFFCT BOOL handeye_calibration(product: IN, session: IN, on_arm: IN, result: OU
    
    ; parse response
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("handeye_calibration","response/status", status)   
+   ret = EKI_GetInt("handeye_calibration", "response/status", status)   
    
    ; if there are no get_detections, close socket and return at once
    IF status>0 THEN

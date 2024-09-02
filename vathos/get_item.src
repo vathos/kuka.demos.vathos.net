@@ -42,7 +42,7 @@ DEFFCT BOOL get_item(item_pose: OUT, grip: IN, layer: IN, position: IN)
 
    ; wait for status
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("get_item","response/status", status)   
+   ret = EKI_GetInt("get_item", "response/status", status)   
    
    ; close connection and return on error
    IF status>0 THEN

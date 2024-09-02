@@ -23,7 +23,7 @@ DEFFCT BOOL load_configuration(product_id: IN, workflow: IN)
    
    ; check for errors
    WAIT FOR $FLAG[1]
-   ret = EKI_GetInt("load_configuration","response/status", status)      
+   ret = EKI_GetInt("load_configuration", "response/status", status)      
 
    ; close network socket
    ret = EKI_Close("load_configuration")

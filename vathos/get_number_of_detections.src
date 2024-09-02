@@ -1,0 +1,45 @@
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL get_number_of_detections(result: OUT, workflow: IN)
+   
+   DECL CHAR workflow[]
+   DECL EKI_STATUS ret
+   DECL INT status
+   DECL INT result
+   
+   ; open network socket
+   ret = EKI_Init("get_number_of_detections")
+   ret = EKI_Open("get_number_of_detections")
+   WAIT FOR $FLAG[10]
+   
+   ; assemble the XML message
+   ret = EKI_SetString("get_number_of_detections", "request/method", "get_number_of_detections")
+   ret = EKI_SetString("get_number_of_detections", "request/params/workflow/type", "string")
+   ret = EKI_SetString("get_number_of_detections", "request/params/workflow/value", workflow[])
+
+   ; send the request
+   ret = EKI_Send("get_number_of_detections", "request")
+
+   ; wait for status
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("get_number_of_detections", "response/status", status)   
+   
+   ; close connection and return on error
+   IF status>0 THEN
+      ; close network socket
+      ret = EKI_Close("get_number_of_detections")
+      ret = EKI_Clear("get_number_of_detections")
+      RETURN FALSE   
+   ENDIF
+   
+   ; parse the received frame
+   WAIT FOR $FLAG[2]
+   ret = EKI_GetInt("get_number_of_detections", "response/params/param", result)
+   
+   ; close network socket
+   ret = EKI_Close("get_number_of_detections")
+   ret = EKI_Clear("get_number_of_detections")
+   
+   RETURN TRUE
+
+ENDFCT
