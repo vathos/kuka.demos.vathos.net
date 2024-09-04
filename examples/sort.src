@@ -39,7 +39,7 @@ DEF sort( )
    LOOP
       
       ; with first/failed attempt, we need to trigger synchronously
-      api_call_success = trigger(FALSE)
+      api_call_success = trigger("votenet", FALSE)
       
       ; async pick & place loop
       LOOP
@@ -54,17 +54,17 @@ DEF sort( )
          ; all detections are relative to camera base obtained from hand-eye calib
          $BASE = BASE_DATA[1]
          
-         ; more to pe-position defined in web GUI
+         ; move to pe-position, distance 300 mm configured
          PTP pick_frame
          
-         ; pick up
+         ; pick up by moving 300 mm in TCP z-direction
          LIN_REL {Z 300} #TOOL
          $OUT[1] = FALSE
          LIN_REL {Z -300} #TOOL
                   
          ; trigger capture and evaluation for the next cycle, no need to wait for capture to 
          ; finish when camera is not mounted on-arm
-         api_call_success = trigger(FALSE)
+         api_call_success = trigger("votenet", FALSE)
          
          SWITCH product_index
             CASE 0
