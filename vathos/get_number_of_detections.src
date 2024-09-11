@@ -6,6 +6,8 @@ DEFFCT BOOL get_number_of_detections(result: OUT, workflow: IN)
    DECL EKI_STATUS ret
    DECL INT status
    DECL INT result
+   state = 3
+   result = 0
    
    ; open network socket
    ret = EKI_Init("get_number_of_detections")
@@ -34,7 +36,7 @@ DEFFCT BOOL get_number_of_detections(result: OUT, workflow: IN)
    
    ; parse the received frame
    WAIT FOR $FLAG[2]
-   ret = EKI_GetInt("get_number_of_detections", "response/params/param", result)
+   ret = EKI_GetInt("get_number_of_detections", "response/params", result)
    
    ; close network socket
    ret = EKI_Close("get_number_of_detections")
