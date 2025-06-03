@@ -12,12 +12,20 @@
     <!--
     Example request body:
     <request>
-      <method>patch_configuration</method>
+      <method>patch_configuration_by_product</method>
       <params>
-        <config_id>
+        <product_id>
           <type>string</type>
-          <value>683f0359da4b3b6cc255da8b</value>
-        </config_id>
+          <value>683f01dafe9f5db37a9f259e</value>
+        </product_id>
+        <workflow>
+          <type>string</type>
+          <value>calibration</value>
+        </workflow>
+        <service>
+          <type>string</type>
+          <value>capture.imaging.vathos.net</value>
+        </service>
         <key>
           <type>string</type>
           <value>session</value>
@@ -31,8 +39,12 @@
     -->
     <XML>
       <ELEMENT Tag="request/method" />
-      <ELEMENT Tag="request/params/config_id/type" />
-      <ELEMENT Tag="request/params/config_id/value" />
+      <ELEMENT Tag="request/params/product_id/type" />
+      <ELEMENT Tag="request/params/product_id/value" />
+      <ELEMENT Tag="request/params/workflow/type" />
+      <ELEMENT Tag="request/params/workflow/value" />
+      <ELEMENT Tag="request/params/service/type" />
+      <ELEMENT Tag="request/params/service/value" />
       <ELEMENT Tag="request/params/key/type" />
       <ELEMENT Tag="request/params/key/value" />
       <ELEMENT Tag="request/params/value/type" />

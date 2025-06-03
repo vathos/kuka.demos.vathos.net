@@ -1,40 +1,98 @@
 <ETHERNETKRL>
-    <CONFIGURATION>
-        <EXTERNAL>
-            <IP>172.31.1.147</IP>
-            <PORT>31234</PORT>
-        </EXTERNAL>
-        <INTERNAL>
-            <ALIVE Set_Flag="10" />
-        </INTERNAL>
-    </CONFIGURATION>
-    <SEND>
-        <XML>
-            <ELEMENT Tag="request/method" />
-            <ELEMENT Tag="request/params/session/type" />
-            <ELEMENT Tag="request/params/session/value" />
-            <ELEMENT Tag="request/params/product_id/type" />
-            <ELEMENT Tag="request/params/product_id/value" />
-            <ELEMENT Tag="request/params/representation/type" />
-            <ELEMENT Tag="request/params/representation/value" />
-            <ELEMENT Tag="request/params/degrees/type" />
-            <ELEMENT Tag="request/params/degrees/value" />
-            <ELEMENT Tag="request/params/eye_in_hand/type" />
-            <ELEMENT Tag="request/params/eye_in_hand/value" />
-            <ELEMENT Tag="request/params/pattern_side_length/type" />
-            <ELEMENT Tag="request/params/pattern_side_length/value" />
-            <ELEMENT Tag="request/params/pattern_width/type" />
-            <ELEMENT Tag="request/params/pattern_width/value" />
-            <ELEMENT Tag="request/params/pattern_height/type" />
-            <ELEMENT Tag="request/params/pattern_height/value" />
-            <ELEMENT Tag="request/params/service/type" />
-            <ELEMENT Tag="request/params/service/value" />
-        </XML>
-    </SEND>
-    <RECEIVE>
-        <XML>
-            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
-            <ELEMENT Tag="response/params/param" Type="REAL" Set_Flag="2" />
-        </XML>
-    </RECEIVE>
+  <CONFIGURATION>
+    <EXTERNAL>
+      <IP><!-- Set IP of the edge device within the machine network. --></IP>
+      <PORT>31234</PORT>
+    </EXTERNAL>
+    <INTERNAL>
+      <ALIVE Set_Flag="10" />
+    </INTERNAL>
+  </CONFIGURATION>
+  <SEND>
+    <!--
+    Example request body:
+    <request>
+      <method>handeye_calibration</method>
+      <params>
+        <session>
+          <type>string</type>
+          <value>handeye_calibration_20250601</value>
+        </session>
+        <product_id>
+          <type>string</type>
+          <value>683f01dafe9f5db37a9f259e</value>
+        </product_id>
+        <representation>
+          <type>string</type>
+          <value>ZYX</value>
+        </representation>
+        <degrees>
+          <type>bool</type>
+          <value>TRUE</value>
+        </degrees>
+        <eye_in_hand>
+          <type>bool</type>
+          <value>TRUE</value>
+        </eye_in_hand>
+        <pattern_side_length>
+          <type>float</type>
+          <value>0.025</value>
+        </pattern_side_length>
+        <pattern_width>
+          <type>int</type>
+          <value>10</value>
+        </pattern_width>
+        <pattern_height>
+          <type>int</type>
+          <value>7</value>
+        </pattern_height>
+        <service>
+          <type>string</type>
+          <value>3d.handeye.calibration.vathos.net</value>
+        </service>
+      </params>
+    </request>
+    -->    
+    <XML>
+      <ELEMENT Tag="request/method" />
+      <ELEMENT Tag="request/params/session/type" />
+      <ELEMENT Tag="request/params/session/value" />
+      <ELEMENT Tag="request/params/product_id/type" />
+      <ELEMENT Tag="request/params/product_id/value" />
+      <ELEMENT Tag="request/params/representation/type" />
+      <ELEMENT Tag="request/params/representation/value" />
+      <ELEMENT Tag="request/params/degrees/type" />
+      <ELEMENT Tag="request/params/degrees/value" />
+      <ELEMENT Tag="request/params/eye_in_hand/type" />
+      <ELEMENT Tag="request/params/eye_in_hand/value" />
+      <ELEMENT Tag="request/params/pattern_side_length/type" />
+      <ELEMENT Tag="request/params/pattern_side_length/value" />
+      <ELEMENT Tag="request/params/pattern_width/type" />
+      <ELEMENT Tag="request/params/pattern_width/value" />
+      <ELEMENT Tag="request/params/pattern_height/type" />
+      <ELEMENT Tag="request/params/pattern_height/value" />
+      <ELEMENT Tag="request/params/service/type" />
+      <ELEMENT Tag="request/params/service/value" />
+    </XML>
+  </SEND>
+  <RECEIVE>
+    <!--
+    Example response body:
+    <response>
+      <status>0</status>
+      <params>
+        <param>-0.92</param>
+        <param>0.3</param>
+        <param>0.67</param>
+        <param>88.19</param>
+        <param>179.5</param>
+        <param>-1.2</param>
+      </params>    
+    </response>
+    -->
+    <XML>
+      <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+      <ELEMENT Tag="response/params/param" Type="REAL" Set_Flag="2" />
+    </XML>
+  </RECEIVE>
 </ETHERNETKRL>

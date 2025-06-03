@@ -1,7 +1,7 @@
 <ETHERNETKRL>
   <CONFIGURATION>
     <EXTERNAL>
-      <IP>      <!-- Set IP of the edge device within the machine network. --></IP>
+      <IP><!-- Set IP of the edge device within the machine network. --></IP>
       <PORT>31234</PORT>
     </EXTERNAL>
     <INTERNAL>
@@ -12,25 +12,19 @@
     <!--
     Example request body:
     <request>
-      <method>trigger</method>
+      <method>get_projection_matrix</method>
       <params>
         <workflow>
           <type>string</type>
-          <value>votenet</value>
+          <value>683f01dafe9f5db37a9f259e</value>
         </workflow>
-        <wait_for_camera>
-          <type>bool</type>
-          <value>TRUE</value>
-        </wait_for_camera>
       </params>
     </request>
     -->
     <XML>
       <ELEMENT Tag="request/method" />
-      <ELEMENT Tag="request/params/workflow/type" />
-      <ELEMENT Tag="request/params/workflow/value" />
-      <ELEMENT Tag="request/params/wait_for_camera/type" />
-      <ELEMENT Tag="request/params/wait_for_camera/value" />
+      <ELEMENT Tag="request/params/product/type" />
+      <ELEMENT Tag="request/params/product/value" />
     </XML>
   </SEND>
   <RECEIVE>

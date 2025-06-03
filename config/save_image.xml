@@ -1,36 +1,70 @@
 <ETHERNETKRL>
-    <CONFIGURATION>
-        <EXTERNAL>
-            <IP>172.31.1.147</IP>
-            <PORT>31234</PORT>
-        </EXTERNAL>
-        <INTERNAL>
-            <ALIVE Set_Flag="10" />
-        </INTERNAL>
-    </CONFIGURATION>
-    <SEND>
-        <XML>
-            <ELEMENT Tag="request/method" />
-            <ELEMENT Tag="request/params/workflow/type" />
-            <ELEMENT Tag="request/params/workflow/value" />
-            <ELEMENT Tag="request/params/stream_no/type" />
-            <ELEMENT Tag="request/params/stream_no/value" />
-            <ELEMENT Tag="request/params/pose/type" />
-            <ELEMENT Tag="request/params/pose/value/@X" />
-            <ELEMENT Tag="request/params/pose/value/@Y" />
-            <ELEMENT Tag="request/params/pose/value/@Z" />
-            <ELEMENT Tag="request/params/pose/value/@A" />
-            <ELEMENT Tag="request/params/pose/value/@B" />
-            <ELEMENT Tag="request/params/pose/value/@C" />
-            <ELEMENT Tag="request/params/representation/type" />
-            <ELEMENT Tag="request/params/representation/value" />
-            <ELEMENT Tag="request/params/degrees/type" />
-            <ELEMENT Tag="request/params/degrees/value" />
-        </XML>
-    </SEND>
-    <RECEIVE>
-        <XML>
-            <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
-        </XML>
-    </RECEIVE>
+  <CONFIGURATION>
+    <EXTERNAL>
+      <IP><!-- Set IP of the edge device within the machine network. --></IP>
+      <PORT>31234</PORT>
+    </EXTERNAL>
+    <INTERNAL>
+      <ALIVE Set_Flag="10" />
+    </INTERNAL>
+  </CONFIGURATION>
+  <SEND>
+    <!--
+    Example request body:
+    <request>
+      <method>save_image</method>
+      <params>
+        <workflow>
+          <type>string</type>
+          <value>683f01dafe9f5db37a9f259e</value>
+        </workflow>
+        <stream_no>
+          <type>int</type>
+          <value>-1</value>
+        </stream_no>
+        <pose>
+          <type>pose</type>
+          <value X="0.1" Y="-0.39" Z="0.89" A="0.0" B="-2.3" C="177.95"></value>
+        </pose>
+        <representation>
+          <type>string</type>
+          <value>ZYX</value>
+        </representation>
+        <degrees>
+          <type>bool</type>
+          <value>TRUE</value>
+        </degrees>
+      </params>
+    </request>
+    -->
+    <XML>
+      <ELEMENT Tag="request/method" />
+      <ELEMENT Tag="request/params/workflow/type" />
+      <ELEMENT Tag="request/params/workflow/value" />
+      <ELEMENT Tag="request/params/stream_no/type" />
+      <ELEMENT Tag="request/params/stream_no/value" />
+      <ELEMENT Tag="request/params/pose/type" />
+      <ELEMENT Tag="request/params/pose/value/@X" />
+      <ELEMENT Tag="request/params/pose/value/@Y" />
+      <ELEMENT Tag="request/params/pose/value/@Z" />
+      <ELEMENT Tag="request/params/pose/value/@A" />
+      <ELEMENT Tag="request/params/pose/value/@B" />
+      <ELEMENT Tag="request/params/pose/value/@C" />
+      <ELEMENT Tag="request/params/representation/type" />
+      <ELEMENT Tag="request/params/representation/value" />
+      <ELEMENT Tag="request/params/degrees/type" />
+      <ELEMENT Tag="request/params/degrees/value" />
+    </XML>
+  </SEND>
+  <RECEIVE>
+    <!--
+    Example response body:
+    <response>
+      <status>0</status>      
+    </response>
+    -->
+    <XML>
+      <ELEMENT Tag="response/status" Type="INT" Set_Flag="1" />
+    </XML>
+  </RECEIVE>
 </ETHERNETKRL>
