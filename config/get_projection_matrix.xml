@@ -14,10 +14,10 @@
     <request>
       <method>get_projection_matrix</method>
       <params>
-        <workflow>
+        <product>
           <type>string</type>
           <value>683f01dafe9f5db37a9f259e</value>
-        </workflow>
+        </product>
       </params>
     </request>
     -->

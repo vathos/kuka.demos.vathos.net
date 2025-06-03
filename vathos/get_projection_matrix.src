@@ -1,0 +1,38 @@
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL get_projection_matrix(product:IN)
+   
+   DECL CHAR product[]
+   DECL CHAR value[]
+   DECL EKI_STATUS ret
+   DECL INT status
+   
+   ; init
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("get_projection_matrix")
+   ret = EKI_Open("get_projection_matrix")
+   WAIT FOR $FLAG[10]
+   
+   ; send request
+   ret = EKI_SetString("get_projection_matrix", "request/method", "get_projection_matrix")
+   ret = EKI_SetString("get_projection_matrix", "request/params/product/type", "string")
+   ret = EKI_SetString("get_projection_matrix", "request/params/product/value", product[]) 
+   ret = EKI_Send("get_projection_matrix", "request")
+   
+   ; check for errors
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("get_projection_matrix", "response/status", status)    
+   
+   ; close network socket
+   ret = EKI_Close("get_projection_matrix")
+   ret = EKI_Clear("get_projection_matrix")
+   
+   IF status>0 THEN
+      return FALSE
+   ELSE
+      RETURN TRUE
+   ENDIF
+      
+ENDFCT

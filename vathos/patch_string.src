@@ -1,8 +1,9 @@
 &ACCESS RVO
 &PARAM EDITMASK = *
-DEFFCT BOOL patch_session(configuration:IN, value:IN)
+DEFFCT BOOL patch_string(configuration:IN, key:IN, value:IN)
    
    DECL CHAR configuration[]
+   DECL CHAR key[]
    DECL CHAR value[]
    DECL EKI_STATUS ret
    DECL INT status
@@ -20,7 +21,7 @@ DEFFCT BOOL patch_session(configuration:IN, value:IN)
    ret = EKI_SetString("patch_configuration", "request/params/config_id/type", "string")
    ret = EKI_SetString("patch_configuration", "request/params/config_id/value", configuration[])
    ret = EKI_SetString("patch_configuration", "request/params/key/type", "string")
-   ret = EKI_SetString("patch_configuration", "request/params/key/value", "session")
+   ret = EKI_SetString("patch_configuration", "request/params/key/value", key[])
    ret = EKI_SetString("patch_configuration", "request/params/value/type", "string")
    ret = EKI_SetString("patch_configuration", "request/params/value/value", value[])   
    ret = EKI_Send("patch_configuration", "request")

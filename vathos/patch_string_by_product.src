@@ -1,0 +1,49 @@
+&ACCESS RVO
+&PARAM EDITMASK = *
+DEFFCT BOOL patch_string_by_product(product_id:IN, workflow:IN, service:IN, key:IN, value:IN)
+   
+   DECL CHAR product_id[]
+   DECL CHAR workflow[]
+   DECL CHAR service[]
+   DECL CHAR key[]
+   DECL CHAR value[]
+   DECL EKI_STATUS ret
+   DECL INT status
+   
+   ; init
+   status = 3
+   
+   ; open network socket
+   ret = EKI_Init("patch_configuration_by_product")
+   ret = EKI_Open("patch_configuration_by_product")
+   WAIT FOR $FLAG[10]
+   
+   ; send request
+   ret = EKI_SetString("patch_configuration_by_product", "request/method", "patch_configuration_by_product")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/product_id/type", "string")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/product_id/value", product_id[])
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/workflow/type", "string")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/workflow/value", workflow[])
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/service/type", "string")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/service/value", service[])
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/key/type", "string")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/key/value", key[])
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/value/type", "string")
+   ret = EKI_SetString("patch_configuration_by_product", "request/params/value/value", value[])   
+   ret = EKI_Send("patch_configuration_by_product", "request")
+   
+   ; check for errors
+   WAIT FOR $FLAG[1]
+   ret = EKI_GetInt("patch_configuration_by_product", "response/status", status)    
+   
+   ; close network socket
+   ret = EKI_Close("patch_configuration_by_product")
+   ret = EKI_Clear("patch_configuration_by_product")
+   
+   IF status>0 THEN
+      return FALSE
+   ELSE
+      RETURN TRUE
+   ENDIF
+      
+ENDFCT
