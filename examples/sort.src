@@ -65,6 +65,10 @@ DEF sort( )
          ; trigger capture and evaluation for the next cycle, no need to wait for capture to 
          ; finish when camera is not mounted on-arm
          api_call_success = trigger("votenet", FALSE)
+         IF NOT api_call_success THEN
+            ; something went wrong on image capture
+            HALT
+         ENDIF
          
          SWITCH product_index
             CASE 0
