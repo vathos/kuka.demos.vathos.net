@@ -42,7 +42,7 @@ DEF handeye( )
    ENDIF
    
    ; reload configuration
-   api_call_success = handle_api_error(load_configuration("63f8cb5fd312240012f27997", "calibration"))
+   api_call_success = load_configuration("63f8cb5fd312240012f27997", "calibration")
    IF NOT api_call_success THEN
       HALT
    ENDIF
