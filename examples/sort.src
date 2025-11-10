@@ -1,7 +1,7 @@
 &ACCESS RVP
 &PARAM EDITMASK = *
 &PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
-DEF sort( )
+DEF demo( )
    
    DECL BOOL api_call_success
    DECL FRAME pick_frame
@@ -21,66 +21,36 @@ DEF sort( )
          class_index = -1
       ;ENDFOLD (USER INI)
    ;ENDFOLD (INI)
+
+   $TOOL = TOOL_DATA[11]
+   $BASE = BASE_DATA[11]
    
-   BAS(#INITMOV, 0)
-   $OUT[1] = TRUE
-   $TOOL = TOOL_DATA[1]
+   PTP $NULLFRAME   
    
-   ; SAK
-   PTP PICK_HOME
-   
-   ; load configuration
    api_call_success = load_configuration("63fcc44d2cec3500131af42f", "votenet")
    IF NOT api_call_success THEN
       HALT
    ENDIF
    
-   ; retry detection loop
-   LOOP
-      
-      ; with first/failed attempt, we need to trigger synchronously
-      api_call_success = trigger("votenet", FALSE)
-      
-      ; async pick & place loop
-      LOOP
+   ; with first/failed attempt, we need to trigger synchronously
+   api_call_success = trigger("votenet", FALSE)
          
-         ; get next detection, timeout after 10s
-         api_call_success = get_pose(pick_frame, product_index, class_index, "votenet", 10)
-         ; no more detections, break out into outer image capture loop
-         IF NOT api_call_success THEN
-            EXIT
-         ENDIF
-                  
-         ; all detections are relative to camera base obtained from hand-eye calib
-         $BASE = BASE_DATA[1]
-         
-         ; move to pe-position, distance 300 mm configured
-         PTP pick_frame
-         
-         ; pick up by moving 300 mm in TCP z-direction
-         LIN_REL {Z 300} #TOOL
-         $OUT[1] = FALSE
-         LIN_REL {Z -300} #TOOL
-                  
-         ; trigger capture and evaluation for the next cycle, no need to wait for capture to 
-         ; finish when camera is not mounted on-arm
-         api_call_success = trigger("votenet", FALSE)
-         IF NOT api_call_success THEN
-            ; something went wrong on image capture
-            HALT
-         ENDIF
-         
-         SWITCH product_index
-            CASE 0
-               ; do smomething with the item based on product index               
-            DEFAULT
-         ENDSWITCH
-         
-         ; move home before picking next item to avoid collisions
-         PTP PICK_HOME
-         
-      ENDLOOP
-            
-   ENDLOOP   
+   ; get next detection, timeout after 10s
+   api_call_success = get_pose(pick_frame, product_index, class_index, "votenet", 10)
+   ; if no detections, then for now stop the program, FIXME: implement custom logic
+   IF NOT api_call_success THEN
+      HALT
+   ENDIF
 
+   ; swich from camera to Schunk gripper for picking
+   $TOOL = TOOL_DATA[1]
+         
+   ; move to pe-position, distance 50 mm configured
+   PTP pick_frame
+         
+   ; pick up by moving 300 mm in TCP z-direction
+   LIN_REL {Z 50} #TOOL
+   $OUT[1] = FALSE
+   LIN_REL {Z -50} #TOOL
+            
 END

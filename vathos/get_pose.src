@@ -1,20 +1,21 @@
 &ACCESS RVO
 &PARAM EDITMASK = *
-DEFFCT BOOL get_pose(pick_frame: OUT, product: OUT, class: OUT, workflow: IN, timeout: IN)
+DEFFCT BOOL get_pose(pick_frame: OUT, product: OUT, class: OUT, offset_frame: OUT, workflow: IN, timeout: IN)
    
    DECL INT timeout
    DECL CHAR workflow[]
    DECL EKI_STATUS ret
    DECL INT status
-   DECL REAL detection[8]
+   DECL REAL detection[14]
    DECL FRAME pick_frame
+   DECL FRAME offset_frame
    DECL INT product
    DECL INT class
    DECL INT i
    
    ; init
    status = 3
-   FOR i=1 TO 8
+   FOR i=1 TO 14
       detection[i] = 0.0
    ENDFOR
    
@@ -70,7 +71,18 @@ DEFFCT BOOL get_pose(pick_frame: OUT, product: OUT, class: OUT, workflow: IN, ti
    pick_frame.C = detection[6]
    class = detection[7]
    product = detection[8]
-   
+   ; this is an offset relative to the pick frame
+   ; non-zero when a an alternate grip is selected to avoid collisions
+   ; to place the part correctly regardless of the grip used to pick
+   ; this transform need to be undone before placing the part
+   ; (e.g. by doing a LIN_REL in a pre-place frame)
+   offset_frame.X = detection[9] * 1000
+   offset_frame.Y = detection[10] * 1000
+   offset_frame.Z = detection[11] * 1000
+   offset_frame.A = detection[12]
+   offset_frame.B = detection[13]
+   offset_frame.C = detection[14]
+
    ; close network socket
    ret = EKI_Close("get_pose")
    ret = EKI_Clear("get_pose")
